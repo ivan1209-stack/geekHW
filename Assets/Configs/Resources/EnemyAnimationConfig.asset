@@ -12,4 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd9a21442ae4458d96f3014eb43e273c, type: 3}
   m_Name: EnemyAnimationConfig
   m_EditorClassIdentifier: 
-  Sequences: []
+  Sequences:
+  - Track: 0
+    Sprites:
+    - {fileID: 21300000, guid: fa5286c792ed4cf418cb7fbb7bb294cd, type: 3}
+    - {fileID: 21300000, guid: 0c78c7247452c4d41a68919cdce080c2, type: 3}
+    - {fileID: 21300000, guid: ef04be519bd889b4a95527e39f0a2e97, type: 3}
+    - {fileID: 21300000, guid: cd0ec3e5c1c32954097777d70f0b60f7, type: 3}
+    - {fileID: 21300000, guid: ea3c55706bf51e54687756534d7b703f, type: 3}
+    - {fileID: 21300000, guid: 3e5c3b6e541761a46968201354af286a, type: 3}
+  - Track: 1
+    Sprites:
+    - {fileID: 21300000, guid: fa5286c792ed4cf418cb7fbb7bb294cd, type: 3}
+    - {fileID: 21300000, guid: 0c78c7247452c4d41a68919cdce080c2, type: 3}
+    - {fileID: 21300000, guid: ef04be519bd889b4a95527e39f0a2e97, type: 3}
+    - {fileID: 21300000, guid: cd0ec3e5c1c32954097777d70f0b60f7, type: 3}
+    - {fileID: 21300000, guid: ea3c55706bf51e54687756534d7b703f, type: 3}
+    - {fileID: 21300000, guid: 3e5c3b6e541761a46968201354af286a, type: 3}
+  - Track: 2
+    Sprites:
+    - {fileID: 21300000, guid: fa5286c792ed4cf418cb7fbb7bb294cd, type: 3}
+    - {fileID: 21300000, guid: 0c78c7247452c4d41a68919cdce080c2, type: 3}
+    - {fileID: 21300000, guid: ef04be519bd889b4a95527e39f0a2e97, type: 3}
+    - {fileID: 21300000, guid: cd0ec3e5c1c32954097777d70f0b60f7, type: 3}
+    - {fileID: 21300000, guid: ea3c55706bf51e54687756534d7b703f, type: 3}
+    - {fileID: 21300000, guid: 3e5c3b6e541761a46968201354af286a, type: 3}

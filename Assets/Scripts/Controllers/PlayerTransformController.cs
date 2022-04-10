@@ -14,6 +14,8 @@ namespace Platformer
         private const float _jumpTresh = 1f;
         private const float _groundLevel  = 0.2f;
 
+        private bool flag;
+
         private Vector3 _leftScale = new Vector3(-1, 1, 1);
         private Vector3 _rightScale = new Vector3(1, 1, 1);
 
@@ -30,6 +32,7 @@ namespace Platformer
             _view = view;
             _animatorController = controller;
             _animatorController.StartAnimation(_view.SpriteRenderer, PlayerAnimState.Idle, true, _animationSpeed);
+            flag = true;
         }
 
         public void Update()
@@ -41,12 +44,18 @@ namespace Platformer
             
             if (IsGrounded())
             {
-                
+                if (!Move && flag)
+                {
+                    _animatorController.StartAnimation(_view.SpriteRenderer, PlayerAnimState.Idle,
+                        true , _animationSpeed);
+                    flag = false;
+                }
                 if (Move)
                 {
                     MoveTowards();
-                    _animatorController.StartAnimation(_view.SpriteRenderer, Move? PlayerAnimState.Run : PlayerAnimState.Idle,
+                    _animatorController.StartAnimation(_view.SpriteRenderer, PlayerAnimState.Run,
                         true , _animationSpeed);
+                    flag = true;
                 }
 
                 if (_inJump && _yVelocity == 0)
@@ -71,6 +80,7 @@ namespace Platformer
 
                 _yVelocity += _g * Time.fixedDeltaTime;
                 _view.transform.position +=  Vector3.up * Time.fixedDeltaTime * _yVelocity;
+                flag = true;
             }
         }
 
