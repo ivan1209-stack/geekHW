@@ -25,7 +25,7 @@ namespace Platformer
         private LevelObjectView _view;
         private PlayerAnimatorController _animatorController;
         private ContactPoller _contactPoller;
-        
+
         public PlayerTransformController(LevelObjectView view, PlayerAnimatorController controller)
         {
             _view = view;
@@ -33,6 +33,7 @@ namespace Platformer
             _animatorController.StartAnimation(_view.SpriteRenderer, PlayerAnimState.Idle, true, _animationSpeed);
             flag = true;
             _contactPoller = new ContactPoller(_view.Collider);
+
         }
 
         public void Update()
@@ -53,7 +54,9 @@ namespace Platformer
 
             if (Move)
             {
-                MoveTowards();
+                bool n = !_contactPoller.leftContact && !_contactPoller.rightContact;
+                Debug.LogWarning(n.ToString());
+                if(!_contactPoller.leftContact && !_contactPoller.rightContact) MoveTowards();
             }
             if (_contactPoller.IsGrounded)
             {

@@ -7,7 +7,7 @@ namespace Platformer
         private ContactPoint2D[] _contacts = new ContactPoint2D[10];
         private Collider2D _collider;
         private int _contactCount;
-        private float _treshhold;
+        private float _treshhold = 0.1f;
 
         public bool IsGrounded { get; private set; }
         public bool leftContact { get; private set; }
@@ -27,9 +27,10 @@ namespace Platformer
 
             for (int i = 0; i < _contactCount; i++)
             {
-                if (_contacts[i].normal.y > _treshhold) IsGrounded = true;
-                if (_contacts[i].normal.x > _treshhold) leftContact = true;
-                if (_contacts[i].normal.x > -_treshhold) rightContact = true;
+                if (_contacts[i].normal.y >= _treshhold) IsGrounded = true;
+                if (_contacts[i].normal.x >= _treshhold) leftContact = true;
+                if (_contacts[i].normal.x <= -_treshhold) rightContact = true;
+                Debug.Log(leftContact + " = " + rightContact +" = "+ _contacts[i].normal.x);
             }
         }
     }
