@@ -33,12 +33,16 @@ namespace Platformer
             else
             {
                 _timeTillNextBullet = delay;
-                _bullets[_index].Throw(_bulletTransform.position,  (_targetTransform.position - _bulletTransform.position) * _startSpeed);
-                _index++;
-
-                if (_index >= _bullets.Count)
+                if ((_targetTransform.position - _bulletTransform.position).magnitude < 30f)
                 {
-                    _index = 0;
+                    _bullets[_index].Throw(_bulletTransform.position,
+                        (_targetTransform.position - _bulletTransform.position) * _startSpeed);
+                    _index++;
+
+                    if (_index >= _bullets.Count)
+                    {
+                        _index = 0;
+                    }
                 }
             }
         }

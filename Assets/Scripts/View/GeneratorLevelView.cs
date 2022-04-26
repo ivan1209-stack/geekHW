@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -12,13 +13,31 @@ namespace Platformer
         [SerializeField]private bool borders;
         [SerializeField][Range(0, 100)] private int fillPercent;
         [SerializeField][Range(0, 100)] private int factorSmooth;
+        [SerializeField][Range(0, 100)] private int ratioTrapsAndGround;
+        [SerializeField]private List<GameObject> obstacelsObjects;
+        [SerializeField]private List<GameObject> trapsObjects;
 
+        public int RatioTrapsAndGround
+        {
+            get => ratioTrapsAndGround;
+            set => ratioTrapsAndGround = value;
+        }
+        public List<GameObject> ObstacelsObjects
+        {
+            get => obstacelsObjects;
+            set => obstacelsObjects = value;
+        }
+        
+        public List<GameObject> TrapsObjects
+        {
+            get => trapsObjects;
+            set => trapsObjects = value;
+        }
         public Tilemap Tilemap
         {
             get => tilemap;
             set => tilemap = value;
         }
-
         public Tile Tile
         {
             get => tile;
@@ -48,6 +67,7 @@ namespace Platformer
             get => fillPercent;
             set => fillPercent = value;
         }
+
 
         public int FactorSmooth
         {

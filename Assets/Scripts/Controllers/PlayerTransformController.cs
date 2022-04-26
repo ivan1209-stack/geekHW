@@ -55,7 +55,6 @@ namespace Platformer
             if (Move)
             {
                 bool n = !_contactPoller.leftContact && !_contactPoller.rightContact;
-                Debug.LogWarning(n.ToString());
                 if(!_contactPoller.leftContact && !_contactPoller.rightContact) MoveTowards();
             }
             if (_contactPoller.IsGrounded)

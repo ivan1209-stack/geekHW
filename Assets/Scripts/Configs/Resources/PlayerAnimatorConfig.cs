@@ -14,7 +14,7 @@ namespace Platformer
         Die = 5
     }
     
-    [CreateAssetMenu(fileName = "PlayerAnimatorConfig", menuName = "Configs/Animations/player" ,order = 0)]
+    [CreateAssetMenu(fileName = "PlayerAnimatorConfig", menuName = "Configs/Animations/player" ,order = 1)]
     public class PlayerAnimatorConfig : ScriptableObject
     {
         [Serializable]

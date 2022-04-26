@@ -30,7 +30,6 @@ namespace Platformer
                 if (_contacts[i].normal.y >= _treshhold) IsGrounded = true;
                 if (_contacts[i].normal.x >= _treshhold) leftContact = true;
                 if (_contacts[i].normal.x <= -_treshhold) rightContact = true;
-                Debug.Log(leftContact + " = " + rightContact +" = "+ _contacts[i].normal.x);
             }
         }
     }

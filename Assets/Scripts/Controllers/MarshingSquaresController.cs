@@ -1,8 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace Platformer
 {
+    /*
+    #region 1
     public class MarshingSquaresController
     {
         private SquareGrid _squareGrid;
@@ -116,6 +119,119 @@ namespace Platformer
                         controlNodes[x + 1, y], controlNodes[x, y]);
                 }
             }
+        }
+    }
+    #endregion*/
+    
+    public class GridGenerate
+    {
+        public Square[,] grid;
+        private int[,] _map;
+        private Tilemap _tilemap;
+        private int nodeCountX;
+        private int nodeCountY;
+        
+        public GridGenerate(int[,] map, float squareSize, Tilemap tilemap)
+        {
+            _tilemap = tilemap;
+            _map = map;
+            nodeCountX = map.GetLength(0);
+            nodeCountY = map.GetLength(1);
+            grid = new Square[nodeCountX, nodeCountY];
+
+            float mapWidth = nodeCountX * squareSize;
+            float mapHeight = nodeCountY * squareSize;
+
+            float size = squareSize / 2;
+
+            float width = -mapWidth / 2;
+            float height = -mapHeight / 2;
+            
+            for (int x = 0; x < nodeCountX; x++)
+            {
+                for (int y = 0; y < nodeCountY; y++)
+                {
+                    if (map[x, y] == 1)
+                    {
+                        DrawTile(x, y);
+                    }
+                }
+            }
+        }
+
+        private void DrawTile(int x, int y)
+        {
+            Tile ChoicedTile;
+            bool TopLeftConect = false, TopRightConect = false, BottomLeftConect = false, BottomRightConect = false;
+            List<Square> targetForChoice = Resources.Load<Tiles>("TilesConfig").squares;
+            if (x == 0 || y == 0 || y == nodeCountY-1 || x == nodeCountX-1) 
+            { 
+                TopLeftConect = true; 
+                BottomRightConect = true;
+                BottomLeftConect = true; 
+                TopRightConect = true;
+            }
+            else 
+            {
+                if (grid[x-1, y-1].TopRight.Active
+                    || grid[x, y-1].TopLeft.Active
+                    || grid[x - 1, y].BottomRight.Active
+                    || _map[x-1, y-1] == 1 
+                    || _map[x-1, y] == 1 
+                    || _map[x, y-1] == 1)
+                { 
+                    BottomLeftConect = true;
+                }
+
+                if (grid[x - 1, y].TopRight.Active
+                    || grid[x - 1, y + 1].BottomRight.Active
+                    || grid[x, y + 1].BottomLeft.Active
+                    || _map[x-1, y] == 1 
+                    || _map[x-1, y+1] == 1 
+                    || _map[x, y+1] == 1)
+                { 
+                    TopLeftConect = true;
+                }
+                        
+
+                if (grid[x, y + 1].BottomRight.Active
+                    || grid[x + 1, y + 1].BottomLeft.Active
+                    || grid[x + 1, y].TopLeft.Active 
+                    || _map[x+1, y+1] == 1 
+                    || _map[x+1, y] == 1 
+                    || _map[x, y+1] == 1) 
+                { 
+                    TopRightConect = true;
+                }
+
+                if (grid[x + 1, y].BottomLeft.Active 
+                    || grid[x + 1, y - 1].TopLeft.Active
+                    || grid[x, y-1].TopRight.Active
+                    || _map[x+1, y-1] == 1 
+                    || _map[x+1, y] == 1 
+                    || _map[x-1, y-1] == 1)
+                {
+                    BottomRightConect = true;
+                }
+                        
+            }
+
+            Vector3Int pos = new Vector3Int(x, y, 0);
+            foreach (var square in targetForChoice)
+            {
+                if (square.Check(TopLeftConect, TopRightConect,
+                        BottomLeftConect, BottomRightConect))
+                {
+                    int index = Random.Range(0, square.tile.Count);
+                    _tilemap.SetTile(pos, square.tile[index]);
+                    grid[x, y].BottomLeft.Active = BottomLeftConect;
+                    grid[x, y].BottomRight.Active = BottomRightConect;
+                    grid[x, y].TopRight.Active = TopRightConect;
+                    grid[x, y].TopLeft.Active = TopLeftConect;
+                    break;
+                }
+            }
+            
         }
     }
 }
