@@ -9,6 +9,7 @@ namespace Platformer
         [SerializeField] private PlayerAnimatorConfig _playerConfig;
         [SerializeField] private LevelObjectView _playerView;
         [SerializeField] private GeneratorLevelView _LevelView;
+        [SerializeField] private QuestView _questView;
         
         private PlayerAnimatorController _playerAnimator;
         private PlayerTransformController _playerController;
@@ -16,6 +17,7 @@ namespace Platformer
         private LevelGeneratorController _levelGeneratorController;
         private List<CannonController> _cannonControllers;
         private List<BulletEmittorController> _bulletControllers;
+        private QuestConfiguratorController _questConfiguratorController;
 
         void Awake()
         {
@@ -28,7 +30,9 @@ namespace Platformer
             _levelGeneratorController = new LevelGeneratorController(_LevelView, _playerView);
             _levelGeneratorController.Init();
             _levelGeneratorController.SpawnPlayer();
-            
+            _questConfiguratorController = new QuestConfiguratorController(_questView);
+            _questConfiguratorController.Init();
+
             foreach (var cannonView in _levelGeneratorController.GetCannons())
             {
                 _cannonControllers.Add(new CannonController(cannonView._muzzleTransform, _playerView.transform));

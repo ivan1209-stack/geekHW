@@ -16,6 +16,8 @@ namespace Platformer
         private readonly bool _borders;
         private readonly int _fillPercent;
         private readonly int _factorSmooth;
+        private readonly int _cannonPercent;
+        private readonly float _bridgePercent;
         private readonly int _ratioTrapsAndGround;
         private readonly int _countWall = 4;
         private LevelObjectView _playerView;
@@ -31,6 +33,8 @@ namespace Platformer
 
         public LevelGeneratorController(GeneratorLevelView view, LevelObjectView playerView)
         {
+            _cannonPercent = view.CannonPercent;
+            _bridgePercent = view.BridgePercent;
             _ratioTrapsAndGround = view.RatioTrapsAndGround;
             _obstacelsObjects = view.ObstacelsObjects;
             _trapsObjects = view.TrapsObjects;
@@ -83,14 +87,24 @@ namespace Platformer
                     }
                     else
                     {
-                        if (Random.Range(0, 100) < _ratioTrapsAndGround)
+                        if (Random.Range(0, 100) < _fillPercent)
                         {
-                            _map[x, y] = Random.Range(0, 100) < _fillPercent ? 2 : 3;
+                            _map[x, y] = 1;
+                        }
+                        else if (Random.Range(0, 100) < _cannonPercent)
+                        {
+                            _map[x, y] = 2;
+                            
+                        }
+                        else if ((double)Random.Range(0, 100) < (double)_bridgePercent)
+                        {
+                            _map[x, y] = 3;
                         }
                         else
                         {
-                            _map[x, y] = Random.Range(0, 100) < _fillPercent ? 1 : 0;
+                            _map[x, y] = 0;
                         }
+                        
                         
                     }
                 }
@@ -132,9 +146,9 @@ namespace Platformer
                     {
                         Clean = 0;
                         for (int i = x+1; _map[i, y] == 0 && i != _mapWidth-1 ; i++)
-                            {
-                                Clean++;
-                            }
+                        {
+                            Clean++;
+                        }
                         if (Clean > 4)
                         {
                             List<GameObject> generated = new List<GameObject>();
@@ -226,19 +240,20 @@ namespace Platformer
 
         public void SpawnPlayer()
         {
-            Vector3 spawnPoint = new Vector3(0, 0, 0);
-            for (int x = 0; x < _mapWidth; x++)
+            Vector3 spawnPoint = new Vector3(_mapWidth/2, _mapHeight/2, 0);
+            for (int x = _mapWidth/2; x < _mapWidth; x++)
             {
-                spawnPoint.x++;
-                for (int y = 0; y < _mapHeight; y++)
+                for (int y = _mapHeight/2; y < _mapHeight; y++)
                 {
-                    spawnPoint.y++;
+                    
                     if (_map[x, y] == 0)
                     {
                         _playerView.Transform.position = spawnPoint;
                         return;
                     }
+                    spawnPoint.y++;
                 }
+                spawnPoint.x++;
             }
         }
     }
